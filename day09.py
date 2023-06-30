@@ -18,7 +18,7 @@ def place_marble(n,curr,arr):
     points = 0
     #idx = arr.index(curr)
     if n == 1:
-        curr = 1
+        curr = 0
         arr.insert(1,1)
     elif n % 23 == 0:
         curr = (curr-7)# % len(arr)
@@ -27,9 +27,13 @@ def place_marble(n,curr,arr):
         points += point + 23
 
     else:
-        curr = (curr + 2) % (len(arr))
+        #print("old curr:",curr)
+        curr = (curr + 2) % (len(arr)+1)
+        #print("new curr:",curr)
+        #print("old arr:",arr)
         arr.insert(curr, n)
-        curr += 1
+        #print("new arr:", arr)
+        #curr += 1
 
     return curr,arr,points
 
@@ -38,8 +42,8 @@ def part1(numplayers,testing=False):
     curr = 0
     player = 1
     players = {n:0 for n in range(1,numplayers+1)}#419)}
-    numlist = [0]
-    for n in range(1,26):
+    numlist = list()
+    for n in range(1,47):
         curr,arr,points = place_marble(n,curr,numlist)
         if testing:
             print(player,curr,arr,points)
@@ -48,13 +52,13 @@ def part1(numplayers,testing=False):
         if player == numplayers+1:
             player = 1
     sorted_players = sorted(players.items(), key = lambda x:x[1], reverse = True)
-    print(sorted_players[:5])
+    print(sorted_players)
 
 
 def part2(testing=False):
     pass
 
-part1(9,True)
+part1(9, True)
 #part2()
 
 print("Time (s.):",time.time()-start)

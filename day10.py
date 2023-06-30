@@ -13,15 +13,15 @@ start = time.time()
 
 lines = list()
 for line in open('day10.txt'):
-    lines.append(line.split())
+    lines.append(line)#.split())
 print(len(lines),lines)
 locs = list()
 for i,l in enumerate(lines):
     # try:
-    x = l[0].split('<')
-    x = int(x[-1].strip(','))
-    y = int(l[1].strip('>'))
-    xvel,yvel = int(l[-2].strip(',').strip('<')),int(l[-1].strip('>'))
+    #print("i,l:",i,l)
+    x,y = int(l[10:16]), int(l[18:24])
+    xvel, yvel = int(l[36:38]), int(l[40:42])
+    print("x,y:",x,y)
     locs.append([x,y,xvel,yvel])
     # except:
     #     print("breaks at i:",i)
@@ -51,6 +51,18 @@ width,height = 600,600
 # set up display
 pygame.init()
 screen = pygame.display.set_mode([width, height])
+
+class Dot(object):
+    def __init__(self,x,y,xvel,yvel):
+        self.x = x
+        self.y = y
+        self.xvel = xvel
+        self.yvel = yvel
+
+    def update(self):
+        self.x += self.xvel
+        self.y += self.yvel
+        
 
 #in case you use fonts:
 pygame.font.init()
